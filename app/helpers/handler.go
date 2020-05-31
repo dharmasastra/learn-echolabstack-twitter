@@ -1,4 +1,4 @@
-package handler
+package helpers
 
 import "gopkg.in/mgo.v2"
 
