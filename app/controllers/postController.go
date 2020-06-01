@@ -9,7 +9,7 @@ import (
 	"strconv"
 )
 
-func (h Handler) CreatePost(c echo.Context) (err error) {
+func (h *Handler) CreatePost(c echo.Context) (err error) {
 	u := &models.User{
 		ID: bson.ObjectIdHex(userIDFromToken(c)),
 	}
@@ -43,7 +43,7 @@ func (h Handler) CreatePost(c echo.Context) (err error) {
 	return c.JSON(http.StatusCreated, p)
 }
 
-func (h Handler) FetchPost(c echo.Context) (err error) {
+func (h *Handler) FetchPost(c echo.Context) (err error) {
 	userId := userIDFromToken(c)
 	page, _ := strconv.Atoi(c.QueryParam("page"))
 	limit, _ := strconv.Atoi(c.QueryParam("limit"))
