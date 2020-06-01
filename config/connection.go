@@ -8,7 +8,7 @@ import (
 func conn() *mgo.Session {
 
 	// Database connection
-	db, err := mgo.Dial("mongodb://root:root123@ds033559.mlab.com:33559/twitter")
+	db, err := mgo.Dial("localhost")
 	if err != nil {
 		log.Fatal(err)
 	}
