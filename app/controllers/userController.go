@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"github.com/dharmasastra/learn-echolabstack-twitter/app/helpers"
 	"github.com/dharmasastra/learn-echolabstack-twitter/app/models"
 	"net/http"
 	"time"
@@ -11,10 +10,6 @@ import (
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
-
-type Handler struct {
-	helpers.Handler
-}
 
 func (h *Handler) SignUp(c echo.Context) (err error) {
 	//bind
@@ -34,6 +29,7 @@ func (h *Handler) SignUp(c echo.Context) (err error) {
 	if err = db.DB("twitter").C("users").Insert(u); err != nil {
 		return
 	}
+	u.Password = "" //don't send password
 	return c.JSON(http.StatusCreated, u)
 }
 
@@ -66,7 +62,7 @@ func (h *Handler) Login(c echo.Context) (err error) {
 	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
 
 	//generate encoded token and send it as response
-	u.Token, err = token.SignedString([]byte(helpers.Key))
+	u.Token, err = token.SignedString([]byte(Key))
 	if err != nil {
 		return err
 	}
